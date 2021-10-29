@@ -1,0 +1,8 @@
+If point is below center of map then offset goes a little down 
+and left or right, it depends where points is relative to center
+
+If point is bove center of map then offset goes a little up 
+and left or right, it also depends where points is relative to center
+
+*offset - offset to real game coordinates if we look at map 
+
