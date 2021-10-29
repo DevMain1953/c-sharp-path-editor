@@ -1,0 +1,38 @@
+{$CLEO .cs}
+
+//-------------MAIN---------------
+0000: NOP 
+thread 'GETCAR' 
+
+//This block looks for any car next to player and if car exists, it puts player in detected car
+:LABEL_1
+wait 0
+0054: store_player $PLAYER_CHAR position_to $C1 $C2 $C3     
+
+//Checks if key T is pressed and then looks for a car next to player
+if and
+05EE:   key_pressed 84
+05F0: $CHECKER = random_vehicle_near_point $C1 $C2 $C3 in_radius 100.0 find_next 0 pass_wrecked 0
+else_jump @LABEL_1 
+0054: store_player $PLAYER_CHAR position_to 1@ 2@ 3@ 
+
+//Stores car in variable
+05F0: 0@ = random_vehicle_near_point 1@ 2@ 3@ in_radius 100.0 find_next 0 pass_wrecked 0
+
+//Puts player in car
+0369: put_player $PLAYER_CHAR in_car 0@
+
+//This block checks if key 1 is pressed and then removes player from a car
+:LABEL_2
+wait 0
+
+//Checks if key 1 is pressed
+if
+05EE:  key_pressed 49 
+else_jump @LABEL_2
+00aa: store_car 0@ position_to $DEADDODO_COORDINATE_X $DEADDODO_COORDINATE_Y $DEADDODO_COORDINATE_Z
+$DEADDODO_COORDINATE_Y += 2.5
+
+//Puts player at specified coordinates and removes him from a car
+012A: put_player $PLAYER_CHAR at $DEADDODO_COORDINATE_X $DEADDODO_COORDINATE_Y $DEADDODO_COORDINATE_Z and_remove_from_car 
+jump @LABEL_1 
